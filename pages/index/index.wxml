@@ -1,42 +1,44 @@
 <!--index.wxml-->
-<view class='weui-cells weui-cells_after-title'>
-  <form bindsubmit='submitForm'>
-    <view class='weui-cell weui-cell_input'>
-      <view class='weui-cell_hd'>
-        <view class='weui-label'>收入类型</view>
-      </view>
-      <view class='weui-cell__bd'>
-        <picker name='type' bindchange='bindTypeChange' range='{{typeRange}}'  range-key='name'>
-        <view class='weui-input'>
-          <text wx:if="{{selectedType}}">{{typeRange[selectedType].name}}</text>
-          <text wx:else>请选择收入类型</text>
+<view class='container'>
+  <view class='weui-cells weui-cells_after-title'>
+    <form bindsubmit='submitForm'>
+      <view class='weui-cell weui-cell_input'>
+        <view class='weui-cell__hd'>
+          <view class='weui-label'>收入类型</view>
         </view>
-      </picker>
+        <view class='weui-cell__bd'>
+          <picker name='type' bindchange='bindTypeChange' range='{{typeRange}}'  range-key='name'>
+            <view class='weui-input'>
+              <text wx:if="{{selectedType}}">{{typeRange[selectedType].name}}</text>
+              <text wx:else>请选择收入类型</text>
+            </view>
+          </picker>
+        </view>
       </view>
-    </view>
-    <view class='weui-cell weui-cell_input'>
-      <view class='weui-cell_hd'>
-        <view class='weui-label'>期数</view>
+      <view class='weui-cell weui-cell_input'>
+        <view class='weui-cell_hd'>
+          <view class='weui-label'>期数</view>
+        </view>
+        <view class='weui-cell__bd'>
+          <picker name='type' bindchange='bindNumChange' range='{{taxNumberRange}}'>
+            <view class='weui-input'>
+              <text wx:if="{{selectedNumber}}">{{taxNumberRange[selectedNumber]}}</text>
+              <text wx:else>请选择期数</text>
+            </view>
+          </picker>
+        </view>
       </view>
-      <view class='weui-cell__bd'>
-        <picker name='type' bindchange='bindNumChange' range='{{taxNumberRange}}'>
-          <view class='weui-input'>
-            <text wx:if="{{selectedNumber}}">{{taxNumberRange[selectedNumber]}}</text>
-            <text wx:else>请选择期数</text>
-          </view>
-        </picker>
+      <view class='weui-cell weui-cell_input'>
+        <view class='weui-cell__hd'>
+          <view class='weui-label'>本月工资</view>
+        </view>
+        <view class='weui-cell__bd'>
+          <input class='weui-input' placeholder='请输入本月工资' />
+        </view>
       </view>
-    </view>
-    <view class='weui-cell weui-cell_input'>
-      <view class='weui-cell__hd'>
-        <view class='weui-label'>本月工资</view>
+      <view class='operate-btn'>
+        <button type='primary' form-type='submit'>Submit</button>
       </view>
-      <view class='weui-cell__bd'>
-        <input class='weui-input' placeholder='请输入本月工资' />
-      </view>
-    </view>
-    <view>
-      <button form-type='submit'>Submit</button>
-    </view>
-  </form>
+    </form>
+  </view>
 </view>
