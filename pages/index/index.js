@@ -74,14 +74,15 @@ Page({
     const arr = [];
     const taxArr = [];
     const pureSalary = salary - insurance - deduct;
-    if(pureSalary <= 0) {
+    if(pureSalary <= 5000) {
       wx.showModal({
         title: '提示',
         content: '您无需纳税'
       })
     } else {
       for (let i = 0; i < 11; i++) {
-        totalSalary += pureSalary;
+        const needTaxSalary = pureSalary - 5000;
+        totalSalary += needTaxSalary;
         let tax = 0;
         if(totalSalary <= 36000) {
           tax = totalSalary * 0.03;
@@ -98,6 +99,7 @@ Page({
         } else {
           tax = totalSalary * 0.45 - 181920;
         }
+        tax = tax.toFixed(2);
         if(i === 0) {
           taxArr.push(tax);
         } else {
