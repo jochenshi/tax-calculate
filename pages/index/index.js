@@ -113,7 +113,7 @@ Page({
           'insurance': insurance,
           'deduct': deduct,
           'tax': taxArr[i],
-          'handSalary': pureSalary - taxArr[i]
+          'handSalary': salary - insurance - taxArr[i]
         });
       }
     }
