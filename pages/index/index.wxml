@@ -16,29 +16,35 @@
         </view>
       </view>
       <view class='weui-cell weui-cell_input'>
-        <view class='weui-cell_hd'>
-          <view class='weui-label'>期数</view>
+        <view class='weui-cell__hd'>
+          <view class='weui-label'>每月工资</view>
         </view>
         <view class='weui-cell__bd'>
-          <picker name='type' bindchange='bindNumChange' range='{{taxNumberRange}}'>
-            <view class='weui-input'>
-              <text wx:if="{{selectedNumber}}">{{taxNumberRange[selectedNumber]}}</text>
-              <text wx:else>请选择期数</text>
-            </view>
-          </picker>
+          <input name='salary' type='digit' class='weui-input' placeholder='请输入每月工资' />
         </view>
       </view>
       <view class='weui-cell weui-cell_input'>
         <view class='weui-cell__hd'>
-          <view class='weui-label'>本月工资</view>
+          <view class='weui-label'>五险一金</view>
         </view>
         <view class='weui-cell__bd'>
-          <input class='weui-input' placeholder='请输入本月工资' />
+          <input name='insurance' type='digit' class='weui-input' placeholder='请输入每月五险一金' />
+        </view>
+      </view>
+      <view class='weui-cell weui-cell_input'>
+        <view class='weui-cell__hd'>
+          <view class='weui-label'>专项附加扣除</view>
+        </view>
+        <view class='weui-cell__bd'>
+          <input name='deduct' type='digit' class='weui-input' placeholder='请输入每月专项附加扣除' />
         </view>
       </view>
       <view class='operate-btn'>
-        <button type='primary' form-type='submit'>Submit</button>
+        <button type='primary' form-type='submit'>点击计算</button>
       </view>
     </form>
+  </view>
+  <view wx:for="{{finalData}}" wx:key="index">
+    {{index + 1}} : {{item.originSalary}} -- {{item.deduct}} -- {{item.tax}} -- {{item.handSalary}}
   </view>
 </view>
