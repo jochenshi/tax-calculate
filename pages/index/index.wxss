@@ -2,9 +2,78 @@
 .container{
   padding: 0;
 }
+
 .operate-btn{
-  position: fixed;
-  bottom: 0rpx;
-  left: 0rpx;
-  width: 100%
+    margin: 10rpx;
+  }
+
+.list-title {
+  margin-top: 10rpx;
+}
+
+.list-title view:not(:last-of-type) {
+  border-right: 1rpx solid #e3e3e3;
+}
+
+.list-title view:first-of-type{
+  width: 15%;
+}
+
+.list-title view{
+  display: inline-block;
+  width: 20%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* .list-row{
+  border-bottom: 1rpx solid #e3e3e3;
+} */
+
+.list-row view:not(:last-of-type) {
+  /* border-right: 1rpx solid #e3e3e3; */
+}
+
+.list-row view:first-of-type{
+  width: 15%;
+}
+
+.list-row{
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e3e3e3;
+}
+
+
+.list-row view{
+  display: inline-block;
+  width: 20%;
+  text-align: center;
+  box-sizing: border-box;
+  word-break: break-all;
+}
+
+.tax{
+  color: red;
+}
+
+.hand-salary{
+  color: green
+}
+
+.sum-info{
+  padding: 5rpx 15rpx;
+}
+
+.footer-info{
+  text-align: center;
+  color: hsl(0, 1%, 37%);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  font-size: 26rpx;
+}
+
+.wrapper{
+  padding-bottom: 20rpx;
 }

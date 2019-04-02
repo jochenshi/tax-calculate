@@ -12,13 +12,14 @@ Page({
       }
     ],
     taxNumberRange: [1,2,3,4,5,6,7,8,9,10,11,12],
-    selectedType: '',
+    selectedType: '0',
     selectedNumber: '',
-    finalData: []
+    finalData: [],
+    totalTax: '',
+    totalPureSalry: ''
   },
   //事件处理函数
   bindTypeChange: function(e){
-    console.log(e);
     this.setData({
       selectedType: e.detail.value
     })
@@ -29,7 +30,6 @@ Page({
     })
   },
   submitForm: function(e){
-    console.log(e.detail.value);
     const {salary, insurance, deduct} = e.detail.value;
     const num_salary = Number(salary) || 0;
     const num_insurance = Number(insurance) || 0;
@@ -43,14 +43,14 @@ Page({
       })
       return;
     }
-    if (!reg.test(insurance)) {
+    if (insurance && !reg.test(insurance)) {
       wx.showModal({
         title: '提示',
         content: '请输入正确的五险一金',
       })
       return;
     }
-    if (!reg.test(deduct)) {
+    if (deduct && !reg.test(deduct)) {
       wx.showModal({
         title: '提示',
         content: '请输入正确的附加扣除',
@@ -66,21 +66,32 @@ Page({
     }
     const result = this.calculateSalary(num_salary, num_insurance, num_deduct);
     this.setData({
-      'finalData': result
+      'finalData': result.salaryArr,
+      'totalPureSalary': result.totalPureSalary,
+      'totalTax': result.totalTax
     });
   },
   calculateSalary: function(salary, insurance, deduct) {
     let totalSalary = 0;
+    let nowTax;
     const arr = [];
     const taxArr = [];
     const pureSalary = salary - insurance - deduct;
+    let totalTax = 0;
+    let totalPureSalary = 0;
     if(pureSalary <= 5000) {
-      wx.showModal({
-        title: '提示',
-        content: '您无需纳税'
-      })
+      for(let i = 0; i < 12; i++) {
+        arr.push({
+          'originSalary': salary,
+          'insurance': insurance,
+          'deduct': deduct,
+          'tax': 0,
+          'handSalary': salary - insurance
+        });
+        totalPureSalary += (salary - insurance);
+      }
     } else {
-      for (let i = 0; i < 11; i++) {
+      for (let i = 0; i < 12; i++) {
         const needTaxSalary = pureSalary - 5000;
         totalSalary += needTaxSalary;
         let tax = 0;
@@ -99,15 +110,16 @@ Page({
         } else {
           tax = totalSalary * 0.45 - 181920;
         }
-        tax = tax.toFixed(2);
         if(i === 0) {
-          taxArr.push(tax);
+          nowTax = tax.toFixed(2);
         } else {
-          const nowTax = taxArr.reduce((previous, current) => {
+          nowTax = taxArr.reduce((previous, current) => {
             return previous - current;
-          }, tax);
-          taxArr.push(nowTax);
+          }, tax).toFixed(2);
         }
+        taxArr.push(nowTax);
+        totalTax += Number(nowTax);
+        totalPureSalary += (salary - insurance - taxArr[i]);
         arr.push({
           'originSalary': salary,
           'insurance': insurance,
@@ -118,9 +130,16 @@ Page({
       }
     }
     console.log(arr);
-    return arr;
+    return {
+      'salaryArr': arr,
+      'totalTax': totalTax.toFixed(2),
+      'totalPureSalary': totalPureSalary.toFixed(2)
+    };
   },
   onLoad: function () {
     console.log(1234);
+  },
+  onShareAppMessage: function() {
+    title: '分享'
   }
 })
